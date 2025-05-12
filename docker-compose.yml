@@ -4,20 +4,19 @@ services:
   frontend:
     build: ./frontend
     container_name: quote_frontend
-
   backend:
     build: ./backend
     container_name: quote_backend
     expose:
       - "5000"
-
   nginx:
     image: nginx:alpine
     container_name: quote_nginx
-    ports:
-      - "8080:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html  # Mount frontend files to Nginx
+    ports:
+      - "8080:80"
     depends_on:
       - frontend
       - backend

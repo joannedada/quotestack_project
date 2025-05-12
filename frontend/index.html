@@ -1,26 +1,90 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>QuoteStack</title>
+    <meta charset="UTF-8">
+    <title>🎬 QuoteStack</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        .quote-box { margin: 20px auto; padding: 30px; width: 50%; border: 1px solid #ccc; border-radius: 10px; }
-        button { padding: 10px 20px; font-size: 16px; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ece9e6, #ffffff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .quote-box {
+            background: #fff;
+            padding: 30px 40px;
+            width: 60%;
+            max-width: 700px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+            color: #555;
+            transition: all 0.3s ease;
+        }
+
+        .quote-box:hover {
+            transform: scale(1.02);
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 28px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .quote-box {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>🎬 QuoteStack 🎬</h1>
-    <div class="quote-box" id="quote-box">Click below to get a random movie quote!</div>
-    <button onclick="getQuote()">Get Quote</button>
+    <h1>🎬 QuoteStack</h1>
+    <div class="quote-box" id="quote-box">
+        Click the button below to get a random movie quote!
+    </div>
+    <button onclick="getQuote()">🎲 Get Quote</button>
+
     <script>
-        function getQuote() {
-            fetch('/api/quote')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('quote-box').innerText = `"${data.quote}"`;
-                });
+        async function getQuote() {
+            try {
+                const response = await fetch('/api/quote');
+                const data = await response.json();
+                document.getElementById('quote-box').innerText = `"${data.quote}"`;
+            } catch (error) {
+                document.getElementById('quote-box').innerText = "Failed to fetch quote. Please try again.";
+            }
         }
     </script>
 </body>
 </html>
+
